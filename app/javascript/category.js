@@ -5,7 +5,9 @@ window.addEventListener('turbo:load', function () {
   const selectWrap = document.getElementById('select-wrap')
   
   const selectChildElement = (selectForm) => {
-
+    if (document.getElementById(selectForm) !== null) {
+      document.getElementById(selectForm).remove()
+    }
   }
 
   // Ajax通信を可能にする
@@ -54,6 +56,36 @@ window.addEventListener('turbo:load', function () {
 
     childWrap.appendChild(childSelect)
     selectWrap.appendChild(childWrap)
+  }
+
+  const getGrandchildCategoryData = (grandchildCategory) => {
+    const grandchildValue = grandchildCategory.value
+    categoryXHR(grandchildValue)
+
+    XHR.onload = () => {
+      const GrandChildItems = XHR.response.item;
+      appendGrandChildSelect(GrandChildItems)
+    }
+  }
+
+  const appendGrandChildSelect = (items) => {
+    const childWrap = document.getElementById('child-select-wrap')
+    const grandchildWrap = document.createElement('div')
+    const grandchildSelect = document.createElement('select')
+
+    grandchildWrap.setAttribute('id', 'grand-child-select-wrap')
+    grandchildSelect.setAttribute('id', 'grand-child-select')
+
+    items.forEach(item => {
+      const grandchildOption = document.createElement('option')
+      grandchildOption.innerHTML = item.name
+      grandchildOption.setAttribute('value', item.id)
+
+      grandchildSelect.appendChild(grandchildOption)
+    });
+
+    grandchildWrap.appendChild(grandchildSelect)
+    childWrap.appendChild(grandchildWrap)
   }
 
   // 親カテゴリーを選択した後の発火するイベント

@@ -2,7 +2,7 @@
   <div>
     カテゴリー
     <div id="select-wrap">
-      <%= f.collection_select :ancestry, @maincategories, :id, :name, {include_blank: "___"}, {id: "parent-category" } %>
+      <%= f.collection_select :ancestry, @maincategories, :id, :name, {include_blank: "_ _ _"}, {id: "parent-category" } %>
     </div>
   </div>
 <% end %>
